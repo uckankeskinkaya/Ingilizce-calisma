@@ -38,17 +38,41 @@ export default async (req) => {
   }
 
   // Bağlantı testi: ayarları ve EVREN'in sunduğu model adlarını gösterir (anahtarı göstermez).
+  // Adres yanlışsa sık kullanılan API adreslerini dener ve hangisinin çalıştığını söyler.
   if (istek.test) {
+    const modelleriGetir = async (adres) => {
+      try {
+        const r = await fetch(`${adres}/models`, { headers: { Authorization: `Bearer ${env("EVREN_API_KEY")}` } });
+        const metin = await r.text();
+        try {
+          const veri = JSON.parse(metin);
+          return { adres, durum: r.status, json: true, modeller: (veri.data ?? []).map((m) => m.id), metin: metin.slice(0, 200) };
+        } catch {
+          return { adres, durum: r.status, json: false };
+        }
+      } catch (h) {
+        return { adres, durum: 0, json: false, metin: h.message };
+      }
+    };
+
+    const ilk = await modelleriGetir(baseUrl);
     const bilgi = { baseUrl, model: env("EVREN_MODEL") };
-    try {
-      const r = await fetch(`${baseUrl}/models`, { headers: { Authorization: `Bearer ${env("EVREN_API_KEY")}` } });
-      const metin = await r.text();
-      if (!r.ok) return yanit({ ...bilgi, hata: `EVREN ${r.status} döndü: ${metin.slice(0, 200)}` });
-      const modeller = (JSON.parse(metin).data ?? []).map((m) => m.id);
-      return yanit({ ...bilgi, modeller });
-    } catch (h) {
-      return yanit({ ...bilgi, hata: `EVREN'e ulaşılamadı: ${h.message}` });
-    }
+    if (ilk.json && ilk.durum === 200) return yanit({ ...bilgi, modeller: ilk.modeller });
+    if (ilk.json) return yanit({ ...bilgi, hata: `EVREN ${ilk.durum} döndü: ${ilk.metin}` });
+
+    let kok;
+    try { kok = new URL(baseUrl); } catch { return yanit({ ...bilgi, hata: "EVREN_BASE_URL geçerli bir adres değil" }); }
+    const adaylar = ["/api/v1", "/api/v1/llm", "/api/llm/v1", "/llm/v1", "/openai/v1", "/api/openai/v1", "/api"]
+      .map((yol) => kok.origin + yol)
+      .concat(`${kok.protocol}//api.${kok.host}/v1`)
+      .filter((a) => a !== baseUrl);
+    const sonuclar = await Promise.all(adaylar.map(modelleriGetir));
+    const bulunan = sonuclar.filter((x) => x.json && x.durum < 500);
+    return yanit({
+      ...bilgi,
+      hata: "Bu adres API değil, web sayfası döndürüyor.",
+      oneriler: bulunan.map((x) => ({ adres: x.adres, durum: x.durum, modeller: x.modeller, metin: x.durum === 200 ? "" : x.metin })),
+    });
   }
 
   const mesajlar = (Array.isArray(istek.mesajlar) ? istek.mesajlar : [])
@@ -103,6 +127,11 @@ ${JSON.stringify({ ozet, calisma, test })}`;
     console.error("EVREN hatası", ai.status, detay);
     return yanit({ hata: `AI servisi hata verdi (${ai.status}): ${detay}` }, 502);
   }
-  const veri = await ai.json();
+  let veri;
+  try {
+    veri = await ai.json();
+  } catch {
+    return yanit({ hata: "AI servisi beklenmeyen cevap verdi (EVREN_BASE_URL yanlış olabilir, 🔧 Bağlantı testi'ni dene)" }, 502);
+  }
   return yanit({ cevap: veri?.choices?.[0]?.message?.content ?? "" });
 };

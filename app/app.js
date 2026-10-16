@@ -228,6 +228,14 @@ async function asistanCagir(govde) {
   return veri;
 }
 
+function oneriHtml(oneriler) {
+  if (!oneriler.length) return `<p class="bilgi">Denenen adreslerin hiçbiri API gibi cevap vermedi. EVREN'den doğru adresi öğrenmemiz gerekiyor.</p>`;
+  return `<p><b>Şu adres(ler) API gibi cevap verdi:</b></p>` + oneriler
+    .map((o) => `<div class="cevap"><div><b>${e(o.adres)}</b> (durum ${o.durum})</div>
+      ${o.durum === 200 ? `<div>✅ Çalışıyor! Netlify'da EVREN_BASE_URL'yi bununla değiştir. Modeller: ${e(o.modeller.join(", ") || "-")}</div>` : `<div class="bilgi">${e(o.metin)}</div>`}</div>`)
+    .join("");
+}
+
 function asistanGoster(alan, h) {
   if (!depo.al("asistanSifre")) {
     alan.innerHTML = `<div class="kart"><h3>🔒 Asistan şifresi</h3>
@@ -297,6 +305,7 @@ function asistanGoster(alan, h) {
     try {
       const t = await asistanCagir({ test: true });
       sonuc.innerHTML = `<div class="kart"><div><b>Adres:</b> ${e(t.baseUrl)}</div><div><b>Seçili model:</b> ${e(t.model)}</div>
+        ${t.oneriler ? oneriHtml(t.oneriler) : ""}
         ${t.hata ? `<div class="hata">⚠️ ${e(t.hata)}</div>` : `<div>✅ Bağlantı çalışıyor. Kullanılabilir modeller:</div>
         <ul class="liste">${t.modeller.map((m) => `<li>${e(m)}</li>`).join("") || "<li>(liste boş)</li>"}</ul>`}</div>`;
     } catch (err) {
