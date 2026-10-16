@@ -1,0 +1,9 @@
+# Netlify ayarları. Her push'ta: içerik kontrol edilir → dist/ hazırlanır → yayınlanır.
+# İçerikte hata varsa yayın durur ve eski sürüm açık kalır.
+[build]
+  command = "node scripts/hazirla.mjs"
+  publish = "dist"
+  functions = "netlify/functions"
+
+[build.environment]
+  NODE_VERSION = "22"

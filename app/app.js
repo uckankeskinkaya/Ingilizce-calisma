@@ -2,7 +2,6 @@
 // Ekranlar:  #/                     → hafta listesi
 //            #/h/<slug>/<sekme>      → ozet | calisma | test | asistan
 
-const { SUPABASE_URL, SUPABASE_KEY } = window.AYAR;
 const ekran = document.getElementById("ekran");
 const onbellek = {}; // slug → hafta verisi
 
@@ -16,17 +15,18 @@ const depo = {
   sil(k) { try { localStorage.removeItem(k); } catch {} },
 };
 
-async function api(yol) {
-  const r = await fetch(`${SUPABASE_URL}/rest/v1/${yol}`, { headers: { apikey: SUPABASE_KEY } });
-  if (!r.ok) throw new Error(`Veri alınamadı (${r.status})`);
+// İçerik sitenin kendi JSON dosyalarından okunur (veritabanı yok).
+async function jsonAl(yol) {
+  const r = await fetch(yol);
+  if (!r.ok) throw new Error(r.status === 404 ? "İçerik bulunamadı." : `Veri alınamadı (${r.status})`);
   return r.json();
 }
 
 async function haftaGetir(slug) {
   if (!onbellek[slug]) {
-    const [h] = await api(`haftalar?slug=eq.${encodeURIComponent(slug)}&select=*`);
-    if (!h) throw new Error("Bu hafta bulunamadı.");
-    onbellek[slug] = h;
+    const d = `icerik/${encodeURIComponent(slug)}`;
+    const [ozet, calisma, test] = await Promise.all([jsonAl(`${d}/ozet.json`), jsonAl(`${d}/calisma.json`), jsonAl(`${d}/test.json`)]);
+    onbellek[slug] = { slug, baslik: ozet.baslik, konu: ozet.konu, ozet, calisma, test };
   }
   return onbellek[slug];
 }
@@ -73,7 +73,7 @@ window.addEventListener("hashchange", yonlendir);
 
 // ---------- hafta listesi ----------
 async function listeEkrani() {
-  const haftalar = await api("haftalar?select=slug,sira,baslik,konu&order=sira.asc");
+  const haftalar = await jsonAl("haftalar.json");
   if (!haftalar.length) {
     ekran.innerHTML = `<h1>Haftalar</h1><p class="bilgi">Henüz içerik yok.</p>`;
     return;
@@ -217,13 +217,13 @@ function testGoster(alan, h) {
 
 // ---------- AI asistan ----------
 async function asistanCagir(govde) {
-  const r = await fetch(`${SUPABASE_URL}/functions/v1/asistan`, {
+  const r = await fetch("api/asistan", {
     method: "POST",
-    headers: { "Content-Type": "application/json", apikey: SUPABASE_KEY, "x-app-sifre": depo.al("asistanSifre", "") },
+    headers: { "Content-Type": "application/json", "x-app-sifre": depo.al("asistanSifre", "") },
     body: JSON.stringify(govde),
   });
   const veri = await r.json().catch(() => ({}));
-  if (r.status === 401) { depo.sil("asistanSifre"); throw new Error("Şifre hatalı. Sayfayı yenileyip tekrar dene."); }
+  if (r.status === 401) { depo.sil("asistanSifre"); throw new Error("Şifre hatalı, tekrar dene."); }
   if (!r.ok) throw new Error(veri.hata || `Asistan hata verdi (${r.status})`);
   return veri;
 }

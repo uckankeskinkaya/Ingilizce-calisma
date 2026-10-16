@@ -16,3 +16,7 @@ Thumbs.db
 .vscode/
 .idea/
 *.log
+
+# --- Netlify ---
+dist/
+.netlify/
