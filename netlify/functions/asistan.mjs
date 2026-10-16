@@ -16,8 +16,11 @@ export default async (req) => {
   if (req.method !== "POST") return yanit({ hata: "Sadece POST" }, 405);
 
   // 1) Şifre kontrolü
-  const sifre = env("APP_SIFRE");
-  if (!sifre || req.headers.get("x-app-sifre") !== sifre) {
+  const sifre = env("APP_SIFRE").trim();
+  if (!sifre) {
+    return yanit({ hata: "Netlify'da APP_SIFRE ayarı bulunamadı (adı doğru mu, ayardan sonra yeniden yayınlandı mı?)" }, 500);
+  }
+  if ((req.headers.get("x-app-sifre") ?? "").trim() !== sifre) {
     return yanit({ hata: "Asistan şifresi hatalı." }, 401);
   }
 

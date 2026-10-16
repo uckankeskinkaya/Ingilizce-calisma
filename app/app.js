@@ -235,7 +235,7 @@ function asistanGoster(alan, h) {
       <div class="cevap-satir"><input type="password" id="sifre" placeholder="Şifre">
       <button id="sifreGir">Giriş</button></div><p id="sifreMesaj" class="bilgi"></p></div>`;
     alan.querySelector("#sifreGir").onclick = async () => {
-      depo.koy("asistanSifre", alan.querySelector("#sifre").value);
+      depo.koy("asistanSifre", alan.querySelector("#sifre").value.trim());
       try { await asistanCagir({ kontrol: true }); asistanGoster(alan, h); }
       catch (err) { alan.querySelector("#sifreMesaj").textContent = err.message; }
     };
