@@ -29,6 +29,25 @@ export default async (req) => {
   }
   if (istek.kontrol) return yanit({ ok: true }); // sadece şifre doğrulama
 
+  const baseUrl = env("EVREN_BASE_URL").replace(/\/+$/, "");
+  if (!baseUrl || !env("EVREN_API_KEY") || !env("EVREN_MODEL")) {
+    return yanit({ hata: "EVREN ayarları eksik (Netlify'da EVREN_API_KEY / EVREN_BASE_URL / EVREN_MODEL)" }, 500);
+  }
+
+  // Bağlantı testi: ayarları ve EVREN'in sunduğu model adlarını gösterir (anahtarı göstermez).
+  if (istek.test) {
+    const bilgi = { baseUrl, model: env("EVREN_MODEL") };
+    try {
+      const r = await fetch(`${baseUrl}/models`, { headers: { Authorization: `Bearer ${env("EVREN_API_KEY")}` } });
+      const metin = await r.text();
+      if (!r.ok) return yanit({ ...bilgi, hata: `EVREN ${r.status} döndü: ${metin.slice(0, 200)}` });
+      const modeller = (JSON.parse(metin).data ?? []).map((m) => m.id);
+      return yanit({ ...bilgi, modeller });
+    } catch (h) {
+      return yanit({ ...bilgi, hata: `EVREN'e ulaşılamadı: ${h.message}` });
+    }
+  }
+
   const mesajlar = (Array.isArray(istek.mesajlar) ? istek.mesajlar : [])
     .filter((m) => (m.role === "user" || m.role === "assistant") && typeof m.content === "string")
     .slice(-12) // son 12 mesaj yeterli; maliyeti sınırlar
@@ -51,11 +70,6 @@ export default async (req) => {
   }
 
   // 3) EVREN'e gönder
-  const baseUrl = env("EVREN_BASE_URL").replace(/\/+$/, "");
-  if (!baseUrl || !env("EVREN_API_KEY") || !env("EVREN_MODEL")) {
-    return yanit({ hata: "EVREN ayarları eksik (Netlify'da EVREN_API_KEY / EVREN_BASE_URL / EVREN_MODEL)" }, 500);
-  }
-
   const sistem = `Sen sabırlı ve samimi bir İngilizce öğretmenisin. Öğrenci Türk bir üniversite öğrencisi.
 Açıklamaları Türkçe yap, İngilizce örnekleri İngilizce yaz ve gerektiğinde Türkçe çevirisini ver.
 Bu haftanın konusu: ${ozet.baslik} – ${ozet.konu}

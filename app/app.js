@@ -252,7 +252,8 @@ function asistanGoster(alan, h) {
       <button class="ikincil" id="temizle">Yeni sohbet</button>
     </div>
     <div class="sohbet" id="sohbet"></div>
-    <div class="yaz"><textarea id="mesaj" placeholder="Sorunu yaz…"></textarea><button id="gonder">Gönder</button></div>`;
+    <div class="yaz"><textarea id="mesaj" placeholder="Sorunu yaz…"></textarea><button id="gonder">Gönder</button></div>
+    <p><button class="ikincil" id="baglantiTesti">🔧 Bağlantı testi</button></p><div id="testSonuc"></div>`;
   const sohbet = alan.querySelector("#sohbet");
   const kutu = alan.querySelector("#mesaj");
   const gonderBtn = alan.querySelector("#gonder");
@@ -290,6 +291,18 @@ function asistanGoster(alan, h) {
   alan.querySelectorAll(".hazir").forEach((b) => (b.onclick = () => gonder(b.dataset.m)));
   alan.querySelector("#temizle").onclick = () => { mesajlar.length = 0; depo.sil(anahtar); ciz(); };
   gonderBtn.onclick = () => gonder(kutu.value);
+  alan.querySelector("#baglantiTesti").onclick = async () => {
+    const sonuc = alan.querySelector("#testSonuc");
+    sonuc.innerHTML = `<p class="bilgi">Test ediliyor…</p>`;
+    try {
+      const t = await asistanCagir({ test: true });
+      sonuc.innerHTML = `<div class="kart"><div><b>Adres:</b> ${e(t.baseUrl)}</div><div><b>Seçili model:</b> ${e(t.model)}</div>
+        ${t.hata ? `<div class="hata">⚠️ ${e(t.hata)}</div>` : `<div>✅ Bağlantı çalışıyor. Kullanılabilir modeller:</div>
+        <ul class="liste">${t.modeller.map((m) => `<li>${e(m)}</li>`).join("") || "<li>(liste boş)</li>"}</ul>`}</div>`;
+    } catch (err) {
+      sonuc.innerHTML = `<div class="hata">⚠️ ${e(err.message)}</div>`;
+    }
+  };
   ciz();
 }
 
