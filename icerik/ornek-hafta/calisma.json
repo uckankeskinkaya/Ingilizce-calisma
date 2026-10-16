@@ -1,0 +1,33 @@
+{
+  "alistirmalar": [
+    {
+      "baslik": "A. Fiilin doğru hâlini yazın (Present Perfect / Past Simple)",
+      "yonerge": "Parantez içindeki fiili uygun zamanda yazın.",
+      "sorular": [
+        { "soru": "I ______ (visit) Paris three times.", "cevap": "have visited", "aciklama": "Hayat deneyimi, zaman belirtilmemiş → Present Perfect." },
+        { "soru": "She ______ (move) to Ankara in 2018.", "cevap": "moved", "aciklama": "'in 2018' belirli geçmiş zaman → Past Simple." },
+        { "soru": "We ______ (not / finish) the project yet.", "cevap": "haven't finished / have not finished", "aciklama": "'yet' Present Perfect işaretidir." },
+        { "soru": "______ you ______ (see) Tom yesterday?", "cevap": "Did / see", "aciklama": "'yesterday' → Past Simple sorusu: Did + V1." },
+        { "soru": "He ______ (work) here since 2020.", "cevap": "has worked", "aciklama": "'since' ile hâlâ süren durum → Present Perfect." }
+      ]
+    },
+    {
+      "baslik": "B. for mu since mı?",
+      "yonerge": "Boşluğa 'for' veya 'since' yazın.",
+      "sorular": [
+        { "soru": "I have known her ______ ten years.", "cevap": "for", "aciklama": "'ten years' bir süredir → for." },
+        { "soru": "They have lived in Izmir ______ 2019.", "cevap": "since", "aciklama": "'2019' bir başlangıç noktasıdır → since." },
+        { "soru": "We haven't eaten ______ breakfast.", "cevap": "since", "aciklama": "'breakfast' bir başlangıç anıdır → since." }
+      ]
+    },
+    {
+      "baslik": "C. Hatayı bulup düzeltin",
+      "yonerge": "Her cümlede bir hata var. Cümlenin doğru hâlini yazın.",
+      "sorular": [
+        { "soru": "I have seen him last week.", "cevap": "I saw him last week.", "aciklama": "'last week' belirli zaman → Past Simple." },
+        { "soru": "She has went to the bank.", "cevap": "She has gone to the bank.", "aciklama": "Present Perfect'te V3 kullanılır: go → gone." },
+        { "soru": "Did you ever been to Spain?", "cevap": "Have you ever been to Spain?", "aciklama": "'ever' ile deneyim sorusu → Present Perfect." }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,57 @@
+{
+  "sorular": [
+    {
+      "soru": "I ______ my keys. I can't open the door.",
+      "secenekler": ["lost", "have lost", "was losing", "had lose"],
+      "dogru": 1,
+      "aciklama": "Sonucu şu an görülen bir olay (kapıyı açamıyorum) → Present Perfect: have lost."
+    },
+    {
+      "soru": "We ______ to the cinema last night.",
+      "secenekler": ["have gone", "has gone", "went", "go"],
+      "dogru": 2,
+      "aciklama": "'last night' belirli bir geçmiş zaman → Past Simple: went."
+    },
+    {
+      "soru": "She has lived in this city ______ 2015.",
+      "secenekler": ["for", "since", "ago", "during"],
+      "dogru": 1,
+      "aciklama": "2015 bir başlangıç noktası → since."
+    },
+    {
+      "soru": "______ you ever ______ a famous person?",
+      "secenekler": ["Did / meet", "Have / met", "Has / met", "Do / meet"],
+      "dogru": 1,
+      "aciklama": "'ever' ile hayat deneyimi sorusu → Have you ever met…? (you ile 'have')."
+    },
+    {
+      "soru": "Which sentence is correct?",
+      "secenekler": [
+        "I have finished it two days ago.",
+        "I finished it two days ago.",
+        "I have finish it two days ago.",
+        "I finish it two days ago."
+      ],
+      "dogru": 1,
+      "aciklama": "'ago' belirli geçmiş zaman bildirir → Past Simple. Present Perfect 'ago' ile kullanılmaz."
+    },
+    {
+      "soru": "They haven't called me ______.",
+      "secenekler": ["already", "yet", "ago", "just"],
+      "dogru": 1,
+      "aciklama": "Olumsuz cümlelerde cümle sonunda 'yet' (henüz) kullanılır."
+    },
+    {
+      "soru": "My grandfather ______ in a factory for 30 years. He retired in 2010.",
+      "secenekler": ["has worked", "works", "worked", "has been working"],
+      "dogru": 2,
+      "aciklama": "Emekli olmuş, yani durum bitmiş → Past Simple: worked."
+    },
+    {
+      "soru": "'Since' kelimesinin Türkçe karşılığı hangisidir?",
+      "secenekler": ["boyunca", "-den beri", "henüz", "zaten"],
+      "dogru": 1,
+      "aciklama": "since = -den beri (başlangıç noktası); for = boyunca (süre)."
+    }
+  ]
+}

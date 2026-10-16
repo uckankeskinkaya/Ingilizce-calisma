@@ -1,0 +1,18 @@
+# --- Gizli anahtarlar: ASLA repoya girmez ---
+.env
+.env.*
+!.env.example
+*.key
+*.pem
+supabase/.env
+supabase/functions/.env
+supabase/.temp/
+supabase/.branches/
+
+# --- Sistem / editör ---
+node_modules/
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.log

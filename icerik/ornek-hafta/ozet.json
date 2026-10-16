@@ -1,0 +1,64 @@
+{
+  "slug": "ornek-hafta",
+  "sira": 0,
+  "baslik": "Örnek Hafta",
+  "konu": "Present Perfect vs. Past Simple",
+  "giris": "Bu hafta geçmişle ilgili iki zamanı karşılaştırıyoruz: Present Perfect (have/has + V3) ve Past Simple (V2). Temel fark: Past Simple belirli, bitmiş bir zamanı anlatır; Present Perfect ise zamanı belirtilmeyen ya da etkisi hâlâ süren olayları.",
+  "bolumler": [
+    {
+      "baslik": "1. Present Perfect Tense",
+      "metin": "Yapı: have / has + past participle (V3). He/She/It ile 'has', diğerleriyle 'have' kullanılır.",
+      "maddeler": [
+        "Hayat deneyimleri (ne zaman olduğu önemli değil): I have been to Italy twice.",
+        "Geçmişte başlayıp hâlâ süren durumlar (for / since ile): We have lived here since 2015.",
+        "Sonucu şu an görülen yakın olaylar: I have lost my keys. (Şu an kapıyı açamıyorum.)",
+        "just, already, yet ile: He has just left. / Have you finished yet?"
+      ],
+      "ornekler": [
+        { "en": "She has finished her homework.", "tr": "Ödevini bitirdi (şu an bitmiş durumda)." },
+        { "en": "Have you ever eaten sushi?", "tr": "Hiç suşi yedin mi?" },
+        { "en": "They haven't seen the new film yet.", "tr": "Yeni filmi henüz izlemediler." }
+      ]
+    },
+    {
+      "baslik": "2. Past Simple Tense",
+      "metin": "Yapı: fiil + -ed (düzenli) veya V2 (düzensiz). Olumsuz ve soruda did + V1 kullanılır.",
+      "maddeler": [
+        "Geçmişte belirli bir zamanda olup bitmiş eylemler.",
+        "Zaman ifadeleri: yesterday, last week, in 2019, two days ago, when I was a child."
+      ],
+      "ornekler": [
+        { "en": "I visited London last year.", "tr": "Geçen yıl Londra'yı ziyaret ettim." },
+        { "en": "Did you see the film yesterday?", "tr": "Filmi dün izledin mi?" }
+      ]
+    },
+    {
+      "baslik": "3. Hangisini Seçmeli?",
+      "metin": "Cümlede belirli bir geçmiş zaman ifadesi (yesterday, ago, last…, in 2010) varsa Past Simple; zaman belirtilmemişse veya süreç hâlâ devam ediyorsa Present Perfect kullanılır.",
+      "maddeler": [
+        "Present Perfect işaretleri: ever, never, just, already, yet, for, since",
+        "Past Simple işaretleri: yesterday, ago, last …, in + yıl",
+        "She has worked here since May. → Hâlâ burada çalışıyor.",
+        "She worked here in 2020. → Artık burada çalışmıyor."
+      ],
+      "ornekler": [
+        { "en": "I have seen that film.", "tr": "O filmi izledim (ne zaman olduğu önemli değil)." },
+        { "en": "I saw that film last Friday.", "tr": "O filmi geçen cuma izledim." }
+      ]
+    }
+  ],
+  "dikkat": [
+    "YANLIŞ: I have seen him yesterday. → DOĞRU: I saw him yesterday. ('yesterday' belirli zaman olduğu için Present Perfect kullanılmaz.)",
+    "for + süre (for ten years), since + başlangıç noktası (since 2015)."
+  ],
+  "kelimeler": [
+    { "en": "experience", "tr": "deneyim" },
+    { "en": "recently", "tr": "son zamanlarda" },
+    { "en": "already", "tr": "zaten, çoktan" },
+    { "en": "yet", "tr": "henüz (olumsuz/soru)" },
+    { "en": "ever", "tr": "hiç (soru)" },
+    { "en": "never", "tr": "asla, hiç" },
+    { "en": "since", "tr": "-den beri (başlangıç noktası)" },
+    { "en": "for", "tr": "boyunca (süre)" }
+  ]
+}
